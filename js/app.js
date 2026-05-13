@@ -242,7 +242,7 @@ function listarSalas() {
         html += `
             <tr>
                 <td>${s.nome}</td>
-                <td><button class="btn-atualizarSala btn btn-primary" data-id="${s.id}">Atulizar</button></td>
+                <td><button class="btn-atualizarSala btn btn-primary" data-id="${s.id}">Atualizar</button></td>
                 <td><button class="btn-deletarSala btn btn-danger" data-id="${s.id}">Deletar</button></td>
             </tr>
         `;
@@ -427,7 +427,7 @@ function listarAlunos() {
             <tr>
                 <td>${a.nome}</td>
                 <td>${sala?.nome || 'sem sala'}</td>
-                <td><button class="btn-atualizarAluno btn btn-primary" data-id="${a.id}">Atulizar</button></td>
+                <td><button class="btn-atualizarAluno btn btn-primary" data-id="${a.id}">Atualizar</button></td>
                 <td><button class="btn-deletarAluno btn btn-danger" data-id="${a.id}">Deletar</button></td>
             </tr>
         `;
