@@ -39,6 +39,7 @@ function navegacaoRegistroPresenca() {
     document.getElementById('listagemAlunos').classList.add('esconde');
     document.getElementById('listagemSalas').classList.add('esconde');
     document.getElementById('registroPresenca').classList.remove('esconde');
+    resetChamada();
     atualizarFiltroSala();
     atualizarSelectSala();
 }
@@ -263,19 +264,30 @@ document.getElementById("listaSalas").addEventListener("click", (e) => {
     if (e.target.classList.contains("btn-deletarSala")) {
 
         const confirmar = confirm(
-            "Essa sala será removida e TODOS os alunos dela também serão excluídos.\n\nDeseja continuar?"
+            "Esta sala será removida. Dessa forma, TODOS os seus alunos e registros de presença também serão excluídos.\n\nDeseja continuar?"
         );
 
         if (!confirmar) return;
 
         let alunos = getData("alunos");
         let salas = getData("salas");
+        let presencas = getData("presencas");
 
-        alunos = alunos.filter(a => a.selectId != idSala);
+        const alunosDaSala = alunos.filter(a => Number(a.selectId) === Number(idSala)).map(a => Number(a.id));
+
+        presencas = presencas.filter(
+            p => !alunosDaSala.includes(Number(p.alunoId))
+        );
+
+        alunos = alunos.filter(
+            a => Number(a.selectId) !== Number(idSala)
+        );
         salas = salas.filter(s => s.id !== idSala);
 
+        setData("presencas", presencas);
         setData("alunos", alunos);
         setData("salas", salas);
+
 
         atualizarSelectRelatorioSala();
         listarSalas();
@@ -447,7 +459,7 @@ document.getElementById("listaAlunos").addEventListener("click", (e) => {
 
     if (e.target.classList.contains("btn-deletarAluno")) {
         const confirmar = confirm(
-            "Esse aluno será removida e TODOS os registros de presenças dele também serão excluídos.\n\nDeseja continuar?"
+            "Este aluno será removido e TODOS os registros de presença dele também serão excluídos.\n\nDeseja continuar?"
         );
 
         if (!confirmar) return;
